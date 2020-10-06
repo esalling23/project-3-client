@@ -6,6 +6,7 @@ import messages from '../AutoDismissAlert/messages'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import social from '../picture/wellbeing.png'
 
 class SignUp extends Component {
   constructor () {
@@ -52,6 +53,7 @@ class SignUp extends Component {
     return (
       <div className="row">
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
+          <img src={social} alt="social picture" style={{ width: '700px', height: 'auto', alignSelf: 'flex-end' }}/>
           <h3>Sign Up</h3>
           <Form onSubmit={this.onSignUp}>
             <Form.Group controlId="email">
@@ -88,7 +90,7 @@ class SignUp extends Component {
               />
             </Form.Group>
             <Button
-              variant="primary"
+              variant="success"
               type="submit"
             >
               Submit
