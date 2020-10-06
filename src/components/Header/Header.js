@@ -17,9 +17,15 @@ const unauthenticatedOptions = (
 )
 
 // const alwaysOptions = (
+<<<<<<< HEAD
 //   <Fragment>
 //     <Nav.Link to="/">Home</Nav.Link>
 //   </Fragment>
+=======
+//   // <Fragment>
+//   //   <Nav.Link to="/">Home</Nav.Link>
+//   // </Fragment>
+>>>>>>> Comment out Home
 // )
 
 const Header = ({ user }) => (
@@ -31,7 +37,11 @@ const Header = ({ user }) => (
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ml-auto">
         { user && <span className="navbar-text mr-2">Welcome, {user.email}</span>}
+<<<<<<< HEAD
         { /* alwaysOptions */ }
+=======
+        {/* alwaysOptions */}
+>>>>>>> Comment out Home
         { user ? authenticatedOptions : unauthenticatedOptions }
       </Nav>
     </Navbar.Collapse>
