@@ -15,3 +15,13 @@ export const sendChat = (chat, user) => {
     }
   })
 }
+
+export const getChats = (user) => {
+  return axios({
+    method: 'GET',
+    url: apiUrl + '/chatmsg',
+    headers: {
+      'Authorization': `Token token=${user.token}`
+    }
+  })
+}

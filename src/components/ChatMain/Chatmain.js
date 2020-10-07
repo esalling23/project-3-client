@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 
 import apiUrl from '../../apiConfig'
 
-import { sendChat } from '../../api/chatApi.js'
+import { sendChat, getChats } from '../../api/chatApi.js'
 import './chatmain.css'
 
 const socket = io.connect(apiUrl)
@@ -23,34 +23,41 @@ class Chatmain extends Component {
   })
 
   showChats = () => {
-    return this.state.chats.map(({ content, owner }, index) => (
-      <div key={index}>
-        <h3>{owner.email}:</h3>
-        <span>{content}</span>
-      </div>
-    ))
+    return this.state.chats.map(({ content, email }, index) => {
+      const user = email.split('@')
+      return (
+        <div key={index}>
+          <h3>{user[0]}:</h3>
+          <span>{content}</span>
+        </div>
+      )
+    })
   }
 
   onSend = e => {
     e.preventDefault()
-    const owner = this.props.user
+    const user = this.props.user
+    const { email } = this.props.user
     const { content } = this.state
-    sendChat(this.state, owner)
+    sendChat(this.state, user)
       .then(res => {
-        socket.emit('chat', { content, owner })
+        socket.emit('chat', { content, email })
         this.setState({ content: '' })
       })
       .catch(this.setState({ content: '' }))
   }
 
-  // componentDidmount () {
-  //   socket.on('chat', (data) => {
-  //     console.log(data)
-  //   })
-  // }
   componentDidMount () {
+    getChats(this.props.user)
+      .then(res => {
+        if (res.data.length > 0) {
+          this.setState((prevState) => {
+            const show = [...prevState.chats, ...res.data]
+            return { chats: show }
+          })
+        }
+      })
     socket.on('chat', (data) => {
-      console.log(data)
       this.setState((prevState) => {
         return { chats: [...prevState.chats, data] }
       })
