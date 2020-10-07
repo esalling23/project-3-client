@@ -58,7 +58,7 @@ class App extends Component {
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/farmChat' render={() => (
-            <Chatmain msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
+            <Chatmain user={user} />
           )} />
         </main>
       </Fragment>
