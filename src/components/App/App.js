@@ -9,6 +9,7 @@ import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 import Chatmain from '../ChatMain/Chatmain.js'
+import About from '../About/About.js'
 
 class App extends Component {
   constructor () {
@@ -43,6 +44,7 @@ class App extends Component {
           />
         ))}
         <main className="container">
+          <Route exact path='/' component={About} />
           <Route path='/sign-up' render={() => (
             <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />
