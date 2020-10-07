@@ -1,0 +1,29 @@
+.about-wrapper .about-subtitle {
+  color: green;
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.about-background {
+  position: relative;
+  left: 150px;
+  justify-content: center;
+    display:inline-block;
+    width: 800px;
+    height: auto;
+}
+
+.about-page {
+  color: green;
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  font-size: 14px;
+
+}
+
+.about-footer {
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  bottom: 122px;
+}

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 
@@ -12,15 +13,16 @@ const authenticatedOptions = (
 
 const unauthenticatedOptions = (
   <Fragment>
-    <Nav.Link href="#sign-up">Sign Up</Nav.Link>
-    <Nav.Link href="#sign-in">Sign In</Nav.Link>
+    <Nav.Link as={Link} to="/" >About</Nav.Link>
+    <Nav.Link as={Link} to="/sign-up" >Sign Up</Nav.Link>
+    <Nav.Link as={Link} to="/sign-in" >Sign In</Nav.Link>
   </Fragment>
 )
 
 const Header = ({ user }) => (
   <Navbar bg="success" variant="dark" expand="md">
     <Navbar.Brand href="#">
-      FarmChat
+      <h2>FarmChat</h2>
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
