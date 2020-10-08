@@ -9,6 +9,8 @@ import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 import Chatmain from '../ChatMain/Chatmain.js'
+import EditChat from '../ChatMain/EditChat.js'
+import DelChat from '../ChatMain/DelChat.js'
 import About from '../About/About.js'
 
 class App extends Component {
@@ -59,6 +61,12 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/farmChat' render={() => (
             <Chatmain user={user} />
+          )} />
+          <Route path='/delChat/:ownerId/:msgId' render={() => (
+            <DelChat msgAlert={this.msgAlert} user={user} />
+          )} />
+          <Route path='/editChat/:ownerId/:msgId'render={({ match }) => (
+            <EditChat msgAlert={this.msgAlert} user={user} match={match} />
           )} />
         </main>
       </Fragment>
