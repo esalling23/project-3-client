@@ -6,6 +6,7 @@ import messages from '../AutoDismissAlert/messages'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import banner from '../picture/banner.jpg'
 
 class SignIn extends Component {
   constructor () {
@@ -51,6 +52,9 @@ class SignIn extends Component {
       <div className="row">
 
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
+          <img src={banner} alt="social banner"
+            style={{ width: '730px', height: 'auto', alignSelf: 'flex-end' }}
+            resizeMode='contain'/>
           <h3>Sign In</h3>
           <Form onSubmit={this.onSignIn}>
             <Form.Group controlId="email">
