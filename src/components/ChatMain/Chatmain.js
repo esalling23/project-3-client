@@ -5,10 +5,12 @@ import Button from 'react-bootstrap/Button'
 
 import apiUrl from '../../apiConfig'
 
+// import ChatOptions from './ChatOptions.js'
 import { sendChat, getChats } from '../../api/chatApi.js'
 import './chatmain.css'
 
 const socket = io.connect(apiUrl)
+
 class Chatmain extends Component {
   constructor () {
     super()
@@ -23,15 +25,20 @@ class Chatmain extends Component {
   })
 
   showChats = () => {
-    return this.state.chats.map(({ content, email }, index) => {
+    console.log(this.state.chats, 'checking')
+    return this.state.chats.map(({ content, email, _id, ownerId }) => {
       const user = email.split('@')
       return (
-        <div key={index}>
-          <h3>{user[0]}:</h3>
-          <span>{content}</span>
+        <div key={_id} data-msgid={ownerId} data-id={_id} onClick = {this.onChatClick}>
+          <h3 data-msgid={ownerId} data-id={_id}>{user[0]}:</h3>
+          <span data-msgid={ownerId} data-id={_id}>{content}</span>
         </div>
       )
     })
+  }
+
+  onChatClick = e => {
+    console.log(e.target)
   }
 
   onSend = e => {
