@@ -29,10 +29,10 @@ export const getChats = (user) => {
 }
 
 // Delete a chat message
-export const delChat = (user) => {
+export const delChat = (user, id) => {
   return axios({
     method: 'DELETE',
-    url: apiUrl + '/chatmsg',
+    url: apiUrl + `/chatmsg/${id}`,
     headers: {
       'Authorization': `Token token=${user.token}`
     }
