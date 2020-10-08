@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import io from 'socket.io-client'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import ShowUser from './ShowUser.js'
 
 import apiUrl from '../../apiConfig'
 
@@ -84,22 +85,29 @@ class Chatmain extends Component {
       showDiv = ''
     }
     return (
-      <div className="row">
-        <div className="showArea">{showDiv}</div>
-        <div className="col-sm-10 col-md-8 mx-auto mt-5">
-          <Form onSubmit={this.onSend}>
-            <Form.Group controlId="msg">
-              <Form.Control
-                required
-                name="content"
-                value={this.state.content}
-                type="text"
-                placeholder="Type here"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Button variant="success" type="submit">Submit</Button>
-          </Form>
+      <div className='row'>
+        <div className="col-sm-8 col-md-8 mx-auto mt-5">
+          <div className="row">
+            <div className="showArea">{showDiv}</div>
+            <div className="col-sm-10 col-md-8 mx-auto mt-5">
+              <Form onSubmit={this.onSend}>
+                <Form.Group controlId="msg">
+                  <Form.Control
+                    required
+                    name="content"
+                    value={this.state.content}
+                    type="text"
+                    placeholder="Type here"
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
+                <Button variant="success" type="submit">Submit</Button>
+              </Form>
+            </div>
+          </div>
+        </div>
+        <div className='col mt-5'>
+          <div className='showUsers'> <ShowUser user={this.props.user}/> </div>
         </div>
       </div>
     )

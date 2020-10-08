@@ -2,7 +2,17 @@
   border: 2px solid black;
   border-radius: 5px;
   height: 500px;
-  width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  overflow-y: scroll;
+}
+
+.showUsers {
+  border: 2px solid black;
+  border-radius: 5px;
+  height: 500px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
