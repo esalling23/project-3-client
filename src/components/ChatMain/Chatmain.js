@@ -26,11 +26,40 @@ class Chatmain extends Component {
     [event.target.name]: event.target.value
   })
 
+  onSend = e => {
+    e.preventDefault()
+    const user = this.props.user
+    const { email, _id } = this.props.user
+    const ownerId = _id
+    const { content } = this.state
+    sendChat(this.state, user)
+      .then(res => {
+        const { _id } = res.data.data
+        socket.emit('chat', { content, email, ownerId, _id })
+        this.setState({ content: '' })
+      })
+      .catch(this.setState({ content: '' }))
+  }
+
+  componentDidMount () {
+    getChats(this.props.user)
+      .then(res => {
+        if (res.data.length > 0) {
+          this.setState((prevState) => {
+            return { chats: [...prevState.chats, ...res.data] }
+          })
+        }
+      })
+    socket.on('chat', (data) => {
+      this.setState((prevState) => {
+        return { chats: [...prevState.chats, data] }
+      })
+    })
+  }
+
   showChats = () => {
-    console.log(this.state.chats, 'yo')
     return this.state.chats.map(({ content, email, _id, ownerId }, index) => {
       const user = email.split('@')
-      console.log(ownerId, this.props.user._id, 'hi')
       return (
         <div key={index} className={this.props.user._id === ownerId ? 'mymsg' : 'yourmsg' }>
           <div className='chatHead'>
@@ -47,37 +76,6 @@ class Chatmain extends Component {
           <span>{content}</span>
         </div>
       )
-    })
-  }
-
-  onSend = e => {
-    e.preventDefault()
-    const user = this.props.user
-    const { email } = this.props.user
-    const { content } = this.state
-    sendChat(this.state, user)
-      .then(res => {
-        socket.emit('chat', { content, email })
-        this.setState({ content: '' })
-      })
-      .catch(this.setState({ content: '' }))
-      .finally(this.componentDidMount())
-  }
-
-  componentDidMount () {
-    getChats(this.props.user)
-      .then(res => {
-        if (res.data.length > 0) {
-          this.setState((prevState) => {
-            const show = [...prevState.chats, ...res.data]
-            return { chats: show }
-          })
-        }
-      })
-    socket.on('chat', (data) => {
-      this.setState((prevState) => {
-        return { chats: [...prevState.chats, data] }
-      })
     })
   }
 
