@@ -54,7 +54,7 @@ class SignIn extends Component {
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
           <img src={banner} alt="social banner"
             style={{ width: '730px', height: 'auto', alignSelf: 'flex-end' }}
-            resizeMode='contain'/>
+            resizemode='contain'/>
           <h3>Sign In</h3>
           <Form onSubmit={this.onSignIn}>
             <Form.Group controlId="email">

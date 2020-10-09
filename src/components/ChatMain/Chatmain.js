@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component, Fragment } from 'react'
+import { Link, Route } from 'react-router-dom'
 import io from 'socket.io-client'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import ShowUser from './ShowUser.js'
 
 import apiUrl from '../../apiConfig'
+import EditChat from './EditChat.js'
 
 import { sendChat, getChats } from '../../api/chatApi.js'
 import './chatmain.css'
@@ -26,17 +27,19 @@ class Chatmain extends Component {
   })
 
   showChats = () => {
+    console.log(this.state.chats, 'yo')
     return this.state.chats.map(({ content, email, _id, ownerId }, index) => {
       const user = email.split('@')
+      console.log(ownerId, this.props.user._id, 'hi')
       return (
-        <div key={index} className={ownerId === this.props.user._id ? 'mymsg' : 'yourmsg' }>
+        <div key={index} className={this.props.user._id === ownerId ? 'mymsg' : 'yourmsg' }>
           <div className='chatHead'>
             <h3>{user[0]}:</h3>
             <div>
-              <Link to={{ pathname: `editChat/${ownerId}/${_id}`, content: { content } }}>
+              <Link to={`/editChat/${ownerId}/${index}`}>
                 <Button>I</Button>
               </Link>
-              <Link to={{ pathname: `delChat/${ownerId}/${_id}` }}>
+              <Link to={`/delChat/${ownerId}/${_id}`}>
                 <Button>X</Button>
               </Link>
             </div>
@@ -58,6 +61,7 @@ class Chatmain extends Component {
         this.setState({ content: '' })
       })
       .catch(this.setState({ content: '' }))
+      .finally(this.componentDidMount())
   }
 
   componentDidMount () {
@@ -85,31 +89,38 @@ class Chatmain extends Component {
       showDiv = ''
     }
     return (
-      <div className='row'>
-        <div className="col-sm-8 col-md-8 mx-auto mt-5">
-          <div className="row">
-            <div className="showArea">{showDiv}</div>
-            <div className="col-sm-10 col-md-8 mx-auto mt-5">
-              <Form onSubmit={this.onSend}>
-                <Form.Group controlId="msg">
-                  <Form.Control
-                    required
-                    name="content"
-                    value={this.state.content}
-                    type="text"
-                    placeholder="Type here"
-                    onChange={this.handleChange}
-                  />
-                </Form.Group>
-                <Button variant="success" type="submit">Submit</Button>
-              </Form>
+      <Fragment>
+        <div className='row'>
+          <div className="col-sm-8 col-md-8 mx-auto mt-5">
+            <div className="row">
+              <div className="showArea">{showDiv}</div>
+              <div className="col-sm-10 col-md-8 mx-auto mt-5">
+                <Form onSubmit={this.onSend}>
+                  <Form.Group controlId="msg">
+                    <Form.Control
+                      required
+                      name="content"
+                      value={this.state.content}
+                      type="text"
+                      placeholder="Type here"
+                      onChange={this.handleChange}
+                    />
+                  </Form.Group>
+                  <Button variant="success" type="submit">Submit</Button>
+                </Form>
+              </div>
             </div>
           </div>
+          <div className='col mt-5'>
+            <div className='showUsers'> <ShowUser user={this.props.user}/> </div>
+          </div>
         </div>
-        <div className='col mt-5'>
-          <div className='showUsers'> <ShowUser user={this.props.user}/> </div>
+        <div>
+          <Route path='/editChat/:ownerId/:msg' render={({ match }) => (
+            <EditChat msgAlert={this.props.msgAlert} user={this.props.user} match={match} chats={this.state.chats} />
+          )} />
         </div>
-      </div>
+      </Fragment>
     )
   }
 }
