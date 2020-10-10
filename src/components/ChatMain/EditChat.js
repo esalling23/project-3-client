@@ -5,6 +5,10 @@ import Button from 'react-bootstrap/Button'
 
 import { editChat, getChats } from '../../api/chatApi.js'
 
+import io from 'socket.io-client'
+import apiUrl from '../../apiConfig'
+const socket = io.connect(apiUrl)
+
 class EditChat extends Component {
   constructor () {
     super()
@@ -16,12 +20,17 @@ class EditChat extends Component {
     e.preventDefault()
     const { user, msgAlert, match } = this.props
     const { content } = this.state
-    editChat(user, content, match.params.msgId)
+    const email = this.props.user.email
+    const ownerId = this.props.user._id
+    const { msgId } = match.params
+    const _id = msgId
+    editChat(user, content, msgId)
       .then(() => msgAlert({
         heading: 'Success',
         message: 'Your Chat Message has been Updated Successfully',
         variant: 'success'
       }))
+      .then(() => socket.emit('edit', { content, email, ownerId, _id }))
       .catch(() => msgAlert({
         heading: 'Fail',
         message: 'You can only Update Your Chats',

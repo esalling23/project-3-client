@@ -56,6 +56,28 @@ class Chatmain extends Component {
         return { chats: [...prevState.chats, data] }
       })
     })
+    socket.on('edit', (data) => {
+      const copychat = Object.assign([], this.state.chats)
+      const toReplace = copychat.filter(val => val._id === data._id)
+      const idx = copychat.indexOf(toReplace[0])
+      if (idx !== -1) {
+        copychat[idx] = data
+        this.setState((prevState) => {
+          return { chats: copychat }
+        })
+      }
+    })
+    socket.on('del', (data) => {
+      const copychat = Object.assign([], this.state.chats)
+      const toRemove = copychat.filter(val => val._id === data.msgId)
+      const idx = copychat.indexOf(toRemove[0])
+      if (idx !== -1) {
+        copychat.splice(idx, 1)
+        this.setState((prevState) => {
+          return { chats: copychat }
+        })
+      }
+    })
     this.scrollToBottom()
   }
 
