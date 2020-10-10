@@ -1,3 +1,13 @@
-.userList {
-  color: white;
+ul {
+  font-size: 20px;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+
+.online {
+  color: lightSteelBlue;
+}
+
+.offline: {
+  color: lightSteelBlue;
 }
