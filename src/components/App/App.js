@@ -8,6 +8,10 @@ import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
+import Chatmain from '../ChatMain/Chatmain.js'
+import EditChat from '../ChatMain/EditChat.js'
+import DelChat from '../ChatMain/DelChat.js'
+import About from '../About/About.js'
 
 class App extends Component {
   constructor () {
@@ -42,6 +46,7 @@ class App extends Component {
           />
         ))}
         <main className="container">
+          <Route exact path='/' component={About} />
           <Route path='/sign-up' render={() => (
             <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />
@@ -53,6 +58,15 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword msgAlert={this.msgAlert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/farmChat' render={() => (
+            <Chatmain user={user} msgAlert={this.msgAlert} />
+          )} />
+          <Route path='/delChat/:msgId' render={() => (
+            <DelChat msgAlert={this.msgAlert} user={user} />
+          )} />
+          <Route path='/editChat/:msgId'render={({ match }) => (
+            <EditChat msgAlert={this.msgAlert} user={this.state.user} match={match} />
           )} />
         </main>
       </Fragment>

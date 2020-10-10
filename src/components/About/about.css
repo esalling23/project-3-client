@@ -1,0 +1,50 @@
+.about-wrapper {
+  color: green;
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  justify-content: center;
+  font-weight: bolder;
+  display: flex;
+  flex-direction: column;
+}
+
+.img {
+border: 2px solid white;
+height: 60vh;
+align-self: center;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-page {
+  color: green;
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  font-size: 14px;
+
+}
+
+.about-footer {
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  bottom: 122px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media only screen and (max-width: 550px) {
+  .img {
+  border: 2px solid white;
+  width: 500px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .img {
+  border: 2px solid white;
+  width: 730px;
+  }
+}
