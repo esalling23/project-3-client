@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react'
-import { Link, Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import io from 'socket.io-client'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import ShowUser from './ShowUser.js'
 
+import { animateScroll } from 'react-scroll'
+
 import apiUrl from '../../apiConfig'
-import EditChat from './EditChat.js'
 
 import { sendChat, getChats } from '../../api/chatApi.js'
 import './chatmain.css'
@@ -55,44 +56,57 @@ class Chatmain extends Component {
         return { chats: [...prevState.chats, data] }
       })
     })
+    this.scrollToBottom()
   }
 
-  showChats = () => {
-    return this.state.chats.map(({ content, email, _id, ownerId }, index) => {
-      const user = email.split('@')
-      return (
-        <div key={index} className={this.props.user._id === ownerId ? 'mymsg' : 'yourmsg' }>
-          <div className='chatHead'>
-            <h3>{user[0]}:</h3>
-            <div>
-              <Link to={`/editChat/${ownerId}/${index}`}>
-                <Button>I</Button>
-              </Link>
-              <Link to={`/delChat/${ownerId}/${_id}`}>
-                <Button>X</Button>
-              </Link>
-            </div>
-          </div>
-          <span>{content}</span>
-        </div>
-      )
+  componentDidUpdate () {
+    this.scrollToBottom()
+  }
+
+  scrollToBottom () {
+    animateScroll.scrollToBottom({
+      containerId: 'chatBox'
     })
+  }
+
+  componentWillUnmount () {
+    this.setState({ content: '', chats: [] })
   }
 
   render () {
     let showDiv
     if (this.state.chats.length !== 0) {
-      showDiv = this.showChats()
+      showDiv = (
+        this.state.chats.map(({ content, email, _id, ownerId }, index) => {
+          const user = email.split('@')
+          return (
+            <div key={index} className={this.props.user._id === ownerId ? 'mymsg' : 'yourmsg' }>
+              <div className='chatHead'>
+                <h3>{user[0]}:</h3>
+                <div>
+                  <Link to={`/editChat/${_id}`}>
+                    <Button>I</Button>
+                  </Link>
+                  <Link to={`/delChat/${_id}`}>
+                    <Button>X</Button>
+                  </Link>
+                </div>
+              </div>
+              <span>{content}</span>
+            </div>
+          )
+        })
+      )
     } else {
       showDiv = ''
     }
     return (
       <Fragment>
         <div className='row'>
-          <div className="col-sm-8 col-md-8 mx-auto mt-5">
+          <div className="col-sm-8 col-md-10 mx-auto mt-4">
             <div className="row">
-              <div className="showArea">{showDiv}</div>
-              <div className="col-sm-10 col-md-8 mx-auto mt-5">
+              <div className="showArea" id="chatBox">{showDiv}</div>
+              <div className="col-sm-10 col-md-10 mx-auto mt-4">
                 <Form onSubmit={this.onSend}>
                   <Form.Group controlId="msg">
                     <Form.Control
@@ -104,20 +118,14 @@ class Chatmain extends Component {
                       onChange={this.handleChange}
                     />
                   </Form.Group>
-                  <Button variant="success" type="submit">Submit</Button>
+                  <Button variant="success" type="submit">Send</Button>
                 </Form>
               </div>
             </div>
           </div>
-          <div className='col mt-5'>
-            <div className='showUsers'> <ShowUser user={this.props.user}/> </div>
-          </div>
         </div>
-        <div>
-          <Route path='/editChat/:ownerId/:msg' render={({ match }) => (
-            <EditChat msgAlert={this.props.msgAlert} user={this.props.user} match={match} chats={this.state.chats} />
-          )} />
-        </div>
+        <div className='users'>Hi, Strangers</div>
+        <div className='showUsers'> <ShowUser user={this.props.user}/> </div>
       </Fragment>
     )
   }

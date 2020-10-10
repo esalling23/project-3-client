@@ -40,10 +40,10 @@ export const delChat = (user, id) => {
 }
 
 // Edit a chat message
-export const editChat = (user, chat) => {
+export const editChat = (user, chat, id) => {
   return axios({
     method: 'PATCH',
-    url: apiUrl + '/chatmsg',
+    url: apiUrl + `/chatmsg/${id}`,
     headers: {
       'Authorization': `Token token=${user.token}`
     },

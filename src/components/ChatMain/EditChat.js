@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
-import { editChat } from '../../api/chatApi.js'
+import { editChat, getChats } from '../../api/chatApi.js'
 
 class EditChat extends Component {
   constructor () {
@@ -13,10 +14,21 @@ class EditChat extends Component {
   }
   onSend = e => {
     e.preventDefault()
-    editChat()
-      .then()
-      .catch()
-      .finally()
+    const { user, msgAlert, match } = this.props
+    const { content } = this.state
+    editChat(user, content, match.params.msgId)
+      .then(() => msgAlert({
+        heading: 'Success',
+        message: 'Your Chat Message has been Updated Successfully',
+        variant: 'success'
+      }))
+      .catch(() => msgAlert({
+        heading: 'Fail',
+        message: 'You can only Update Your Chats',
+        variant: 'danger'
+      }))
+      .finally(this.setState({ content: '' }))
+      .finally(() => this.props.history.push('/farmChat'))
   }
 
   handleChange = event => this.setState({
@@ -24,8 +36,31 @@ class EditChat extends Component {
   })
 
   componentDidMount () {
-    console.log(this.props)
+    const { params } = this.props.match
+    getChats(this.props.user)
+      .then(res => {
+        const chatObj = res.data.filter(val => val._id === params.msgId)
+        if (this.props.user._id === chatObj[0].ownerId) {
+          const chatCont = chatObj[0].content
+          let copyCont = Object.assign('', this.state.content)
+          copyCont = chatCont
+          this.setState({ content: copyCont })
+        } else {
+          this.props.msgAlert({
+            heading: 'Fail',
+            message: 'You can only Update Your Chats',
+            variant: 'danger'
+          })
+          this.props.history.push('/farmChat')
+        }
+      })
+      .catch(console.error)
   }
+
+  componentWillUnmount () {
+    return this.setState({ content: '' })
+  }
+
   render () {
     return (
       <div className="row">
@@ -49,4 +84,4 @@ class EditChat extends Component {
   }
 }
 
-export default EditChat
+export default withRouter(EditChat)

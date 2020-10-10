@@ -5,7 +5,6 @@ import { delChat } from '../../api/chatApi.js'
 
 class DelChat extends Component {
   componentDidMount () {
-    console.log(this.props)
     const { msgAlert, history, user, match } = this.props
     delChat(user, match.params.msgId)
       .then(() => msgAlert({

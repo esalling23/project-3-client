@@ -8,6 +8,8 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import banner from '../picture/banner.jpg'
 
+import './../About/about.css'
+
 class SignIn extends Component {
   constructor () {
     super()
@@ -50,42 +52,43 @@ class SignIn extends Component {
 
     return (
       <div className="row">
-
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
-          <img src={banner} alt="social banner"
-            style={{ width: '730px', height: 'auto', alignSelf: 'flex-end' }}
-            resizemode='contain'/>
-          <h3>Sign In</h3>
-          <Form onSubmit={this.onSignIn}>
-            <Form.Group controlId="email">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                required
-                type="email"
-                name="email"
-                value={email}
-                placeholder="Enter email"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                name="password"
-                value={password}
-                type="password"
-                placeholder="Password"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Button
-              variant="success"
-              type="submit"
-            >
-              Submit
-            </Button>
-          </Form>
+          <div className='img'>
+            <img src={banner} alt="social banner"/>
+          </div>
+          <div>
+            <h3>Sign In</h3>
+            <Form onSubmit={this.onSignIn}>
+              <Form.Group controlId="email">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  required
+                  type="email"
+                  name="email"
+                  value={email}
+                  placeholder="Enter email"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  required
+                  name="password"
+                  value={password}
+                  type="password"
+                  placeholder="Password"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+              <Button
+                variant="success"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </Form>
+          </div>
         </div>
       </div>
     )
