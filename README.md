@@ -1,10 +1,10 @@
-# Project 3: Farm Chat API
+# Project 3: Farm Chat Client
 
-This application is the front end client for the chat room application.
+This application is the front end client for the chat room application. Using sockets.io to chat with other users in real time.
 
 ## Important Links
-<a href="">Deployed client</a><br>
-<a href="">Deployed API</a><br>
+<a href="https://sei-troubleshoot.github.io/project-3-client/">Deployed client</a><br>
+<a href="https://thawing-meadow-19567.herokuapp.com/">Deployed API</a><br>
 <a href="https://github.com/SEI-Troubleshoot/project-3-api">API repository</a><br>
 <a href="https://github.com/SEI-Troubleshoot">Project Repository</a>
 
