@@ -59,14 +59,14 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
-          <AuthenticatedRoute user={user} path='/farmChat' render={() => (
-            <Chatmain user={user} msgAlert={this.msgAlert} />
-          )} />
           <Route path='/delChat/:msgId' render={() => (
             <DelChat msgAlert={this.msgAlert} user={user} />
           )} />
           <Route path='/editChat/:msgId'render={({ match }) => (
             <EditChat msgAlert={this.msgAlert} user={this.state.user} match={match} />
+          )} />
+          <AuthenticatedRoute user={user} path='/farmChat' render={() => (
+            <Chatmain user={user} msgAlert={this.msgAlert} />
           )} />
         </main>
       </Fragment>

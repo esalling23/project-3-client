@@ -13,13 +13,13 @@ class SignOut extends Component {
     const { msgAlert, history, clearUser, user } = this.props
 
     signOut(user)
+      .then(() => socket.emit('user'))
       .finally(() => msgAlert({
         heading: 'Signed Out Successfully',
         messagE: messages.signOutSuccess,
         variant: 'success'
       }))
       .finally(() => history.push('/'))
-      .finally(() => socket.emit('end'))
       .finally(() => clearUser())
   }
 
