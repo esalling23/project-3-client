@@ -9,6 +9,10 @@ import Button from 'react-bootstrap/Button'
 import social from '../picture/unnamed.jpg'
 import './../About/about.css'
 
+import apiUrl from '../../apiConfig'
+import io from 'socket.io-client'
+const socket = io.connect(apiUrl)
+
 class SignUp extends Component {
   constructor () {
     super()
@@ -37,6 +41,7 @@ class SignUp extends Component {
         message: messages.signUpSuccess,
         variant: 'success'
       }))
+      .then(() => socket.emit('user'))
       .then(() => history.push('/'))
       .catch(error => {
         this.setState({ email: '', password: '', passwordConfirmation: '' })

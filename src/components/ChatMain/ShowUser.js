@@ -3,6 +3,10 @@ import React, { Component, Fragment } from 'react'
 import { getUser } from '../../api/getUser.js'
 import './showuser.css'
 
+import io from 'socket.io-client'
+import apiUrl from '../../apiConfig'
+const socket = io.connect(apiUrl)
+
 class ShowUser extends Component {
   constructor () {
     super()
@@ -11,17 +15,25 @@ class ShowUser extends Component {
     }
   }
 
-  componentDidMount () {
-    getUser(this.props.user)
+  getUserFunc = () => {
+    return (getUser(this.props.user)
       .then(res => {
         if (res.data.length > 0) {
           this.setState((prevState) => {
-            const add = [...prevState.name, ...res.data]
+            const add = [...res.data]
             return { name: add }
           })
         }
       })
       .catch(console.error)
+    )
+  }
+
+  componentDidMount () {
+    this.getUserFunc()
+    socket.on('user', (data) => {
+      this.getUserFunc()
+    })
   }
 
   render () {

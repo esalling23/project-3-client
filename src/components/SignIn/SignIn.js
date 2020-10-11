@@ -10,6 +10,10 @@ import banner from '../picture/banner.jpg'
 
 import './../About/about.css'
 
+import apiUrl from '../../apiConfig'
+import io from 'socket.io-client'
+const socket = io.connect(apiUrl)
+
 class SignIn extends Component {
   constructor () {
     super()
@@ -36,6 +40,7 @@ class SignIn extends Component {
         message: messages.signInSuccess,
         variant: 'success'
       }))
+      .then(() => socket.emit('user'))
       .then(() => history.push('/farmChat'))
       .catch(error => {
         this.setState({ email: '', password: '' })
