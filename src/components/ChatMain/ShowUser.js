@@ -49,9 +49,8 @@ class ShowUser extends Component {
             )
           })}
           {this.state.name.filter(val => val.signIn === false).map(({ email }, index) => {
-            const user = email.split('@')
             return (
-              <li key={index + this.state.name.length} className='offline'>{user[0]}</li>
+              <li key={index + this.state.name.length} className='offline'>{email}</li>
             )
           })}
         </ul>
