@@ -10,7 +10,8 @@ This application is the front end client for the chat room application. Using so
 
 
 ## Planning Story
-After our planning period we split up the setup of the front end client and back end api into pairs.  When the templates were ready, we set up the models and READMEs, then tested each CRUD with curl scripts. From here, our group met to split up tasks to work either individually or for pair programming to complete mvp requirements.      
+After our planning period we split up the setup of the front end client and back end api into pairs.  When the templates were ready, we set up the models and READMEs, then tested each CRUD with curl scripts. From here, our group met to split up tasks to work either individually or for pair programming to complete mvp requirements. First we setup authorization to make sure every users able to signUp, signIn ,signOut, and changePassword. Users able to chat with each other
+in My chat room, also people could see which user is online. Finally, we did some styling with different fonts, colors and picture.
 
 ### User Stories
 
@@ -45,4 +46,5 @@ After our planning period we split up the setup of the front end client and back
 ---
 
 #### Wireframe:
+<img src="https://i.imgur.com/eVSbST4.png">
 <img src="https://imgur.com/mIoWf28.png">
