@@ -44,9 +44,8 @@ class ShowUser extends Component {
       showJSX = (
         <ul className = 'userList'>
           {this.state.name.filter(val => val.signIn === true).map(({ email }, index) => {
-            const user = email.split('@')
             return (
-              <li key={index} className='online'> {user[0]}</li>
+              <li key={index} className='online'> {email}</li>
             )
           })}
           {this.state.name.filter(val => val.signIn === false).map(({ email }, index) => {
